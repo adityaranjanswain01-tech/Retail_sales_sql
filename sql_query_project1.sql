@@ -189,7 +189,7 @@ group by 1
 -- Find the category that generated the highest total sales.
 select category,sum(total_sale) as total_sale from retail_sales
 group by 1
-order by 1 desc
+order by 2 desc
 limit 1
 
 -- Find the average total_sale for each gender.
@@ -248,9 +248,10 @@ group by 1
 having sum(total_sale)>200000
 
 -- Find the highest-selling transaction for each category.
-select category,
-max(transactions_id) from retail_sales
-group by  1
+SELECT DISTINCT ON (category)
+       category, transactions_id, total_sale
+FROM retail_sales
+ORDER BY category, total_sale DESC;
 
 --Find the top 3 customers in terms of total spending within each category.
 with customer_spending as(select 
